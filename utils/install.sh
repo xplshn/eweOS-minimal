@@ -10,7 +10,7 @@ set -x
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem busybox dinit dinit-services tinyramfs limine ca-certificates
 
 # Install dbin and other tools
-DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
+export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
 $RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
 "$DBIN_INSTALL_DIR/busybox" --install "$(dirname "$DBIN_INSTALL_DIR")"
 
