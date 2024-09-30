@@ -9,9 +9,9 @@ mount_overlay base
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certificates
 
 # Install dbin and other tools
-mkdir -p ./tmpdir/rootfs/bin ./tmpdir/rootfs/usr/bin ./tmpdir/rootfs/lib ./tmpdir/rootfs/usr/lib
+mkdir -p ./tmpdir/rootfs/bin ./tmpdir/rootfs/usr/bin ./tmpdir/rootfs/lib ./tmpdir/rootfs/usr/lib ./tmpdir/rootfs/usr/local/bin/
 export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
-$RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | env DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
+$RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | env DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin sh -s -- add busybox/busybox dbin fuse/fusermount bash"
 
 # Install symlinks for BusyBox
 $RUNAS "$DBIN_INSTALL_DIR/busybox" --install ./tmpdir/rootfs
@@ -30,10 +30,9 @@ $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-db-upgrade ./pacman.AppDir/usr/lib
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-key ./pacman.AppDir/usr/lib
 
 # Install dwarfs-tools and fuse in the rootfs
-DBIN_INSTALL_DIR=/usr/local/bin
-$RUNAS ../tmpdir/rootfs/bin/dbin add dwarfs-tools fuse/fusermount && {
-    $RUNAS ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/dwarfs
-    $RUNAS ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/mkdwarfs
+$RUNAS sh -c "DBIN_INSTALL_DIR=../tmpdir/rootfs/usr/local/bin ../tmpdir/rootfs/bin/dbin add dwarfs-tools fuse/fusermount" && {
+    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/dwarfs-tools ../tmpdir/rootfs/usr/local/bin/dwarfs
+    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/dwarfs-tools ../tmpdir/rootfs/usr/local/bin/mkdwarfs
 }
 
 # Build AppBundle and link binaries
