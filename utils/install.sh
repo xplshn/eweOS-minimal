@@ -10,7 +10,7 @@ $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmwa
 
 # Install dbin and other tools
 export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
-$RUNAS sh -c "DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
+$RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | env DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
 
 # Check if BusyBox was correctly installed
 if [ ! -f "$DBIN_INSTALL_DIR/busybox" ]; then
