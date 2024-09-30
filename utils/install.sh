@@ -6,7 +6,7 @@ _logtxt "#### bootstrapping base system"
 
 mount_overlay base
 
-$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs musl filesystem dinit dinit-services tinyramfs ca-certs pacman
+$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs ca-certs pacman
 
 export DBIN_TRACKERFILE=/tmp/dbin.tracker.json
 
