@@ -14,7 +14,7 @@ export DBIN_TRACKERFILE=/tmp/dbin.tracker.json
 mkdir -p ./tmpdir/rootfs/bin ./tmpdir/rootfs/usr/bin ./tmpdir/rootfs/lib ./tmpdir/rootfs/usr/lib ./tmpdir/rootfs/usr/local/bin/
 export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
 $RUNAS curl -o ./tmpdir/rootfs/bin/dbin https://bin.ajam.dev/x86_64_Linux/dbin && chmod +x ./tmpdir/rootfs/bin/dbin
-$RUNAS sh -c "./tmpdir/rootfs/bin/dbin https://bin.ajam.dev/x86_64_Linux/dbin | env DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin sh -s -- add busybox/busybox fuse/fusermount bash"
+$RUNAS sh -c "./tmpdir/rootfs/bin/dbin https://bin.ajam.dev/x86_64_Linux/dbin add busybox/busybox fuse/fusermount bash"
 
 # Install symlinks for BusyBox
 $RUNAS "$DBIN_INSTALL_DIR/busybox" --install ./tmpdir/rootfs
