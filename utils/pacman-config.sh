@@ -12,4 +12,4 @@ if [ ! -f "pacman.ewe.conf" ]; then
 fi
 sed -i "s/Architecture = .*/Architecture = $TARGET_ARCH/g" pacman.ewe.conf
 sed -i "s@Include = /etc/pacman.d/mirrorlist@Server = http://os-repo-auto.ewe.moe/eweos/\$repo/os/\$arch/@" pacman.ewe.conf
-echo "HoldPkg = base" >> pacman.ewe.conf
+echo "IgnorePkg = base" >> pacman.ewe.conf
