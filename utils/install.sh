@@ -41,12 +41,14 @@ $RUNAS sh -c "DBIN_INSTALL_DIR=/usr/local/bin ../tmpdir/rootfs/bin/dbin add dwar
 
 # Build AppBundle and link binaries
 $RUNAS ./pelf-dwfs --add-appdir ./pacman.AppDir "pacman-$(date +"%d-%m-%Y")-xplshn" --output-to ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle && {
+    set -x
     $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman
     $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-conf
     $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-db-upgrade
     $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-key
     $RUNAS cp /etc/pacman.conf ../tmpdir/rootfs/etc
     $RUNAS mkdir -p ../tmpdir/rootfs/etc/pacman.d && $RUNAS curl -o ../tmpdir/rootfs/etc/pacman.d/mirrorlist https://raw.githubusercontent.com/eweOS/packages/refs/heads/pacman-mirrorlist/mirrorlist
+    set +x
 }
 
 cd ..
