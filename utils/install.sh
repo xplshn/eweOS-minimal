@@ -12,6 +12,7 @@ $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmwa
 # Install dbin and other tools
 DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
 $RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
+"$DBIN_INSTALL_DIR/busybox" --install "$(dirname "$DBIN_INSTALL_DIR")"
 
 # Clone and prepare pelf
 $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf
