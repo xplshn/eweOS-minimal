@@ -27,6 +27,7 @@ $RUNAS mkdir -p pacman.AppDir/usr/bin pacman.AppDir/usr/lib
 # Copy pacman binaries and get their required libraries
 $RUNAS cp ./assets/AppRun.multiBinary ./pacman.AppDir/AppRun
 $RUNAS cp /usr/bin/pacman* ./pacman.AppDir/usr/bin
+$RUNAS cp /bin/bash ./pacman.AppDir/usr/bin # DBIN installed this binary earlier, which means that it is static.
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman ./pacman.AppDir/usr/lib
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-conf ./pacman.AppDir/usr/lib
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-db-upgrade ./pacman.AppDir/usr/lib
