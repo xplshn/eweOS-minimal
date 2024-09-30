@@ -7,7 +7,7 @@ _logtxt "#### bootstrapping base system"
 mount_overlay base
 
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem busybox dinit dinit-services tinyramfs limine ca-certificates
-$RUNAS sh -c "DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin curl -qsfSL "https://raw.githubusercontent.com/xplshn/dbin/master/stubdl" | sh -s -- add busybox dbin dwarfs-tools fuse/fusermount bash"
+$RUNAS sh -c "DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin curl -qsfSL "https://raw.githubusercontent.com/xplshn/dbin/master/stubdl" | sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
 ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf {
   mkdir -p pacman.AppDir/usr/bin pacman.AppDir/usr/lib
   cp /usr/bin/pacman* ./pacman.AppDir/usr/bin
