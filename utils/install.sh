@@ -12,17 +12,8 @@ $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmwa
 export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
 $RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | env DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
 
-# Check if BusyBox was correctly installed
-if [ ! -f "$DBIN_INSTALL_DIR/busybox" ]; then
-    echo "Error: BusyBox not found at $DBIN_INSTALL_DIR/busybox"
-    exit 1
-fi
-
-# Make sure BusyBox is executable
-chmod +x "$DBIN_INSTALL_DIR/busybox"
-
 # Install symlinks for BusyBox
-"$DBIN_INSTALL_DIR/busybox" --install "$DBIN_INSTALL_DIR"
+"$DBIN_INSTALL_DIR/busybox" --install "$(basename "$DBIN_INSTALL_DIR")"
 
 # Clone and prepare pelf
 $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf
