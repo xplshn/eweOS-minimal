@@ -53,7 +53,13 @@ $RUNAS ./pelf-dwfs --add-appdir ./pacman.AppDir "pacman-$(date +"%d-%m-%Y")-xpls
 
 cd ..
 
-# Install additional packages from profile
+umount_overlay
+
+_logtxt "#### bootstrapping packages"
+
+mount_overlay packages base
+
+## Install additional packages from profile
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.txt)
 
 # Check for target architecture-specific packages
