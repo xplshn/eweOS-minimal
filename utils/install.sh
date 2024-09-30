@@ -42,6 +42,8 @@ $RUNAS ./pelf-dwfs --add-appdir ./pacman.AppDir "pacman-$(date +"%d-%m-%Y")-xpls
     cp /etc/pacman.conf ../tmpdir/rootfs/etc
 }
 
+cd ..
+
 umount_overlay
 
 _logtxt "#### bootstrapping packages"
