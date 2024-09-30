@@ -13,7 +13,7 @@ export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
 $RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | env DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
 
 # Install symlinks for BusyBox
-"$DBIN_INSTALL_DIR/busybox" --install "$(basename "$DBIN_INSTALL_DIR")"
+"$DBIN_INSTALL_DIR/busybox" --install ./tmpdir/rootfs
 
 # Clone and prepare pelf
 $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf
