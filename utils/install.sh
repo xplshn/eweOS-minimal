@@ -30,9 +30,9 @@ $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-db-upgrade ./pacman.AppDir/usr/lib
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-key ./pacman.AppDir/usr/lib
 
 # Install dwarfs-tools and fuse in the rootfs
-$RUNAS sh -c "DBIN_INSTALL_DIR=../tmpdir/rootfs/usr/local/bin ../tmpdir/rootfs/bin/dbin add dwarfs-tools fuse/fusermount" && {
-    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/dwarfs-tools ../tmpdir/rootfs/usr/local/bin/dwarfs
-    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/dwarfs-tools ../tmpdir/rootfs/usr/local/bin/mkdwarfs
+$RUNAS sh -c "DBIN_INSTALL_DIR=/usr/local/bin ../tmpdir/rootfs/bin/dbin add dwarfs-tools fuse/fusermount" && {
+    $RUNAS ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/dwarfs
+    $RUNAS ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/mkdwarfs
 }
 
 # Build AppBundle and link binaries
