@@ -43,6 +43,7 @@ $RUNAS ./pelf-dwfs --add-appdir ./pacman.AppDir "pacman-$(date +"%d-%m-%Y")-xpls
     $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-key
     $RUNAS cp /etc/pacman.conf ../tmpdir/rootfs/etc
     $RUNAS mkdir -p ../tmpdir/rootfs/etc/pacman.d && curl -o ../tmpdir/rootfs/etc/pacman.d/mirrorlist https://raw.githubusercontent.com/eweOS/packages/refs/heads/pacman-mirrorlist/mirrorlist
+}
 
 cd ..
 
