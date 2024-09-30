@@ -1,13 +1,2 @@
-greetd
-seatd
 linux
-fastfetch
-vim
-sudo
 linux-firmware
-linux-firmware-amdgpu
-linux-firmware-iwlwifi
-linux-firmware-mediatek
-linux-firmware-qcom
-connman
-wpa_supplicant
