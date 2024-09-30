@@ -6,7 +6,7 @@ _logtxt "#### bootstrapping base system"
 
 mount_overlay base
 
-$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certs
+$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certs
 
 export DBIN_TRACKERFILE=/tmp/dbin.tracker.json
 
@@ -54,11 +54,11 @@ $RUNAS ./pelf-dwfs --add-appdir ./pacman.AppDir "pacman-$(date +"%d-%m-%Y")-xpls
 cd ..
 
 # Install additional packages from profile
-#$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.txt)
+$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.txt)
 
 # Check for target architecture-specific packages
-#if [ -f profiles/$PROFILE/packages.$TARGET_ARCH.txt ]; then
-#  $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.$TARGET_ARCH.txt)
-#fi
+if [ -f profiles/$PROFILE/packages.$TARGET_ARCH.txt ]; then
+  $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.$TARGET_ARCH.txt)
+fi
 
 umount_overlay
