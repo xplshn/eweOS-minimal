@@ -53,7 +53,7 @@ umount_overlay
 
 _logtxt "#### bootstrapping packages"
 
-#mount_overlay base
+mount_overlay base
 
 # Install additional packages from profile
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.txt)
