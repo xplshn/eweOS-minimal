@@ -18,29 +18,29 @@ $RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/s
 # Clone and prepare pelf
 $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf
 
-mkdir -p pacman.AppDir/usr/bin pacman.AppDir/usr/lib
+$RUNAS mkdir -p pacman.AppDir/usr/bin pacman.AppDir/usr/lib
 
 # Copy pacman binaries and get their required libraries
-cp /usr/bin/pacman* ./pacman.AppDir/usr/bin
-./cmd/misc/getlibs /usr/bin/pacman ./pacman.AppDir/usr/lib
-./cmd/misc/getlibs /usr/bin/pacman-conf ./pacman.AppDir/usr/lib
-./cmd/misc/getlibs /usr/bin/pacman-db-upgrade ./pacman.AppDir/usr/lib
-./cmd/misc/getlibs /usr/bin/pacman-key ./pacman.AppDir/usr/lib
+$RUNAS cp /usr/bin/pacman* ./pacman.AppDir/usr/bin
+$RUNAS ./cmd/misc/getlibs /usr/bin/pacman ./pacman.AppDir/usr/lib
+$RUNAS ./cmd/misc/getlibs /usr/bin/pacman-conf ./pacman.AppDir/usr/lib
+$RUNAS ./cmd/misc/getlibs /usr/bin/pacman-db-upgrade ./pacman.AppDir/usr/lib
+$RUNAS ./cmd/misc/getlibs /usr/bin/pacman-key ./pacman.AppDir/usr/lib
 
 # Install dwarfs-tools and fuse in the rootfs
 DBIN_INSTALL_DIR=/usr/local/bin
 $RUNAS ../tmpdir/rootfs/bin/dbin add dwarfs-tools fuse/fusermount && {
-    ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/dwarfs
-    ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/mkdwarfs
+    $RUNAS ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/dwarfs
+    $RUNAS ln -sfT /usr/local/bin/dwarfs-tools /usr/local/bin/mkdwarfs
 }
 
 # Build AppBundle and link binaries
 $RUNAS ./pelf-dwfs --add-appdir ./pacman.AppDir "pacman-$(date +"%d-%m-%Y")-xplshn" --output-to ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle && {
-    ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman
-    ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-conf
-    ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-db-upgrade
-    ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-key
-    cp /etc/pacman.conf ../tmpdir/rootfs/etc
+    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman
+    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-conf
+    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-db-upgrade
+    $RUNAS ln -sfT ../tmpdir/rootfs/usr/local/bin/pacman.AppBundle ../tmpdir/rootfs/usr/bin/pacman-key
+    $RUNAS cp /etc/pacman.conf ../tmpdir/rootfs/etc
 }
 
 cd ..
