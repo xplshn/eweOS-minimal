@@ -6,7 +6,6 @@ _logtxt "#### bootstrapping base system"
 
 mount_overlay base
 
-set -x
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem busybox dinit dinit-services tinyramfs limine ca-certificates
 
 # Install dbin and other tools
