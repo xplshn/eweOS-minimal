@@ -45,29 +45,9 @@ jobs:
         run: |
           ls results/ | grep -v .sha256
           ls results/ | grep .sha256
-      - name: Upload artifact
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
           name: eweos-${{ matrix.arch }}-${{ matrix.variant }}
-          path: results/
-          compression-level: 0
-      - name: Create GitHub Release
-        if: github.event_name != 'pull_request'
-        id: create_release
-        uses: actions/create-release@v1
-        with:
-          tag_name: 'continuous-${{ github.run_id }}-${{ matrix.arch }}-${{ matrix.variant }}'
-          release_name: 'Continuous Release ${{ github.run_id }} - ${{ matrix.arch }} - ${{ matrix.variant }}'
-          draft: false
-          prerelease: true
-          body: "Automated continuous release for ${{ matrix.variant }} on ${{ matrix.arch }} architecture."
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Upload to GitHub Release
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: results/
-          asset_name: eweos-${{ matrix.arch }}-${{ matrix.variant }}.iso
-          asset_content_type: application/octet-stream
+          path: results/*
+          retention-days: 7
