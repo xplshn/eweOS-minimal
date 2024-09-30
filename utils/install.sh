@@ -11,7 +11,18 @@ $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmwa
 # Install dbin and other tools
 export DBIN_INSTALL_DIR=$PWD/tmpdir/rootfs/bin
 $RUNAS sh -c "curl -qsfSL https://raw.githubusercontent.com/xplshn/dbin/master/stubdl | sh -s -- add busybox/busybox dbin dwarfs-tools fuse/fusermount bash"
-"$DBIN_INSTALL_DIR/busybox" --install "$(dirname "$DBIN_INSTALL_DIR")"
+
+# Check if BusyBox was correctly installed
+if [ ! -f "$DBIN_INSTALL_DIR/busybox" ]; then
+    echo "Error: BusyBox not found at $DBIN_INSTALL_DIR/busybox"
+    exit 1
+fi
+
+# Make sure BusyBox is executable
+chmod +x "$DBIN_INSTALL_DIR/busybox"
+
+# Install symlinks for BusyBox
+"$DBIN_INSTALL_DIR/busybox" --install "$DBIN_INSTALL_DIR"
 
 # Clone and prepare pelf
 $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf
@@ -49,10 +60,12 @@ _logtxt "#### bootstrapping packages"
 
 mount_overlay packages base
 
-$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs `cat profiles/$PROFILE/packages.txt | xargs`
+# Install additional packages from profile
+$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.txt)
 
+# Check for target architecture-specific packages
 if [ -f profiles/$PROFILE/packages.$TARGET_ARCH.txt ]; then
-  $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs `cat profiles/$PROFILE/packages.$TARGET_ARCH.txt | xargs`
+  $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.$TARGET_ARCH.txt)
 fi
 
 umount_overlay
