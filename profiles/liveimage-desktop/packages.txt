@@ -4,11 +4,13 @@ linux
 fastfetch
 vim
 sudo
+linux
 linux-firmware
 linux-firmware-amdgpu
 linux-firmware-iwlwifi
 linux-firmware-mediatek
 linux-firmware-qcom
+limine
 hyprland
 foot
 waybar
