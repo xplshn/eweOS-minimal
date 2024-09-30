@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo "Dummy config.sh step!"
+
 #enable_service connman
 #enable_service greetd
 
