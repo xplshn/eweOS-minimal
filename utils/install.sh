@@ -6,7 +6,7 @@ _logtxt "#### bootstrapping base system"
 
 mount_overlay base # used to say "base"
 
-$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certificates
+$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certs
 
 # Install dbin and other tools
 mkdir -p ./tmpdir/rootfs/bin ./tmpdir/rootfs/usr/bin ./tmpdir/rootfs/lib ./tmpdir/rootfs/usr/lib ./tmpdir/rootfs/usr/local/bin/
