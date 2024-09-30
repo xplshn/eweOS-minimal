@@ -21,6 +21,7 @@ $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && 
 $RUNAS mkdir -p pacman.AppDir/usr/bin pacman.AppDir/usr/lib
 
 # Copy pacman binaries and get their required libraries
+$RUNAS cp ./assets/AppRun.multiBinary ./pacman.AppDir/AppRun
 $RUNAS cp /usr/bin/pacman* ./pacman.AppDir/usr/bin
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman ./pacman.AppDir/usr/lib
 $RUNAS ./cmd/misc/getlibs /usr/bin/pacman-conf ./pacman.AppDir/usr/lib
