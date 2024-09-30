@@ -4,7 +4,7 @@ mkdir -p tmpdir/rootfs
 
 _logtxt "#### bootstrapping base system"
 
-mount_overlay base
+mount_overlay base # used to say "base"
 
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certificates
 
@@ -51,7 +51,7 @@ umount_overlay
 
 _logtxt "#### bootstrapping packages"
 
-mount_overlay packages linux linux-firmware musl filesystem dinit dinit-services tinyramfs limine pciutils ca-certificates # Used to say only "base"
+mount_overlay base # Used to say only "base"
 
 # Install additional packages from profile
 $RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs $(xargs < profiles/$PROFILE/packages.txt)
