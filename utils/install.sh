@@ -6,7 +6,7 @@ _logtxt "#### bootstrapping base system"
 
 mount_overlay base
 
-$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs ca-certs pacman
+$RUNAS pacstrap -G -M -c -C ./pacman.ewe.conf ./tmpdir/rootfs linux linux-firmware musl filesystem dinit dinit-services tinyramfs ca-certs busybox pacman
 
 export DBIN_TRACKERFILE=/tmp/dbin.tracker.json
 
@@ -17,7 +17,7 @@ $RUNAS curl -o ./tmpdir/rootfs/bin/dbin https://bin.ajam.dev/x86_64_Linux/dbin &
 $RUNAS sh -c "env DBIN_INSTALL_DIR="$PWD/tmpdir/rootfs/bin" ./tmpdir/rootfs/bin/dbin add busybox/busybox fuse/fusermount bash"
 
 # Install symlinks for BusyBox
-$RUNAS "$DBIN_INSTALL_DIR/busybox" --install ./tmpdir/rootfs/usr/bin
+$RUNAS "$DBIN_INSTALL_DIR/busybox" --install ./tmpdir/rootfs/bin
 
 # Clone and prepare pelf
 $RUNAS ./tmpdir/rootfs/bin/dbin run gix clone https://github.com/xplshn/pelf && cd pelf
